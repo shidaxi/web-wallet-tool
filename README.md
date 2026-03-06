@@ -2,6 +2,8 @@
 
 A pure frontend multi-chain wallet generation tool based on BIP39 mnemonic phrases. This tool runs entirely in your browser with **zero network requests**, designed for development and research purposes.
 
+![Demo](assets/demo.png)
+
 ## ⚠️ Security Warning
 
 **CRITICAL:** This tool handles private keys and sensitive cryptographic material.
