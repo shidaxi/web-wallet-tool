@@ -1,5 +1,5 @@
 import { Button, Form, Row, Col } from 'react-bootstrap';
-import { RefreshCw, Copy, Check } from 'lucide-react';
+import { RefreshCw, Copy, Check, ClipboardPaste } from 'lucide-react';
 import { useState } from 'react';
 import { Language, WordCount } from '../../lib/types/mnemonic';
 import { WORD_COUNT_OPTIONS, LANGUAGE_OPTIONS } from '../../lib/constants/wordlists';
@@ -10,6 +10,7 @@ interface MnemonicControlsProps {
   onWordCountChange: (count: WordCount) => void;
   onLanguageChange: (lang: Language) => void;
   onGenerate: () => void;
+  onPaste: (text: string) => void;
   mnemonic: string[];
 }
 
@@ -19,9 +20,11 @@ export function MnemonicControls({
   onWordCountChange,
   onLanguageChange,
   onGenerate,
+  onPaste,
   mnemonic,
 }: MnemonicControlsProps) {
   const [copied, setCopied] = useState(false);
+  const [pasted, setPasted] = useState(false);
 
   const handleCopyMnemonic = async () => {
     if (mnemonic.length > 0) {
@@ -65,6 +68,24 @@ export function MnemonicControls({
         <Button variant="primary" onClick={onGenerate} className="d-flex align-items-center gap-2">
           <RefreshCw size={16} />
           Generate
+        </Button>
+      </Col>
+
+      <Col xs="auto">
+        <Button
+          variant={pasted ? 'success' : 'outline-secondary'}
+          onClick={async () => {
+            const text = await navigator.clipboard.readText();
+            if (text.trim()) {
+              onPaste(text);
+              setPasted(true);
+              setTimeout(() => setPasted(false), 1500);
+            }
+          }}
+          className="d-flex align-items-center gap-2"
+        >
+          {pasted ? <Check size={16} /> : <ClipboardPaste size={16} />}
+          {pasted ? 'Pasted!' : 'Paste from Clipboard'}
         </Button>
       </Col>
 

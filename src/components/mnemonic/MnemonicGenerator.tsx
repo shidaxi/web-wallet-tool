@@ -22,6 +22,7 @@ export function MnemonicGenerator({ mnemonic }: MnemonicGeneratorProps) {
     setPassphrase,
     generate,
     updateWord,
+    importMnemonic,
   } = mnemonic;
 
   return (
@@ -36,6 +37,7 @@ export function MnemonicGenerator({ mnemonic }: MnemonicGeneratorProps) {
         onLanguageChange={setLanguage}
         onGenerate={generate}
         mnemonic={words}
+        onPaste={importMnemonic}
       />
 
       {words.length > 0 && (
